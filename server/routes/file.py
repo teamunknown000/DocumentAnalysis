@@ -14,7 +14,6 @@ async def index(
         file_name = random_id()
     else:
         file_name = random_id()+"."+file_name.split(".").pop()
-    print(file_name)
     content = file.file.read()
     with open(path.join("assets", file_name), "wb") as f:
         f.write(content)
