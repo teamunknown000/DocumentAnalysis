@@ -1,18 +1,24 @@
-from fastapi import APIRouter , UploadFile , File , Form , status
-from typing import Annotated
-from pathlib import Path
+from fastapi import APIRouter, File, Form, UploadFile, status
+from server.utils.random import random_id
+from os import path
 
 router = APIRouter(prefix="/file")
 
-assets_dir = Path(__file__).parent/"assets"
-assets_dir.mkdir(parents=True, exist_ok=True)
 
 @router.post("/upload")
 async def index(
     file: UploadFile = File(...)
 ):
-    return{
-        "status":200
+    file_name = file.filename
+    if not file_name:
+        file_name = random_id()
+    else:
+        file_name = random_id()+"."+file_name.split(".").pop()
+    print(file_name)
+    content = file.file.read()
+    with open(path.join("assets", file_name), "wb") as f:
+        f.write(content)
+    return {
+        "status": 200,
+        "file_name": file_name
     }
-    
-    

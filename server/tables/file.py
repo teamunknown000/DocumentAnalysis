@@ -17,7 +17,7 @@ class File :
     
     def init() :
         return connection.execute('''
-            CREATE TABLE IF NO EXISTS file (
+            CREATE TABLE IF NOT EXISTS file (
                 ID UUID PRIMARY KEY NOT NULL , 
                 EMAIL TEXT NOT NULL,
                 FILE_PATH TEXT NOT NULL,
